@@ -1,11 +1,11 @@
-import SiriEffect from './SiriEffect'
+import NeuronEffect from './NeuronEffect'
 import './App.css'
 
 function App() {
   return (
     <>
       <h1>Hello!</h1>
-      <SiriEffect />
+      <NeuronEffect />
     </>
   )
 }
