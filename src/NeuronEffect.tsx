@@ -2,83 +2,37 @@ import React, { useRef, useEffect } from 'react';
 import Phaser from 'phaser';
 
 class NeuronScene extends Phaser.Scene {
-    private particles: Phaser.GameObjects.Particles.ParticleEmitter[] = [];
+    private particles: any;
 
     preload() {
-        this.load.image('particle', '/assets/particles-single.png'); // ajuste o caminho se necessário
-    }
-
-    constructor() {
-        super({ key: 'NeuronScene' });
+        this.load.image('particle', '/assets/particles-single.png');
     }
 
     create() {
-        console.log('Phaser Scene: create called');
+        this.particles = this.add.particles('particle');
+    }
 
-        // Centralizar os emissores e ajustar ranges para efeito mais orgânico
-        const mainEmitter = this.add.particles(this.cameras.main.width / 2, this.cameras.main.height / 2, 'particle', {
-            lifespan: 3000,
-            scale: { start: 0.5, end: 0 },
-            quantity: 1,
-            blendMode: Phaser.BlendModes.SCREEN,
-            tint: { onEmit: () => Phaser.Utils.Array.GetRandom([0x0074ff, 0x00c3ff, 0x00b28a]) },
-            alpha: { start: 1, end: 0 },
-            frequency: 4,
-            emitting: true,
-            emitZone: {
-                type: 'edge',
-                source: new Phaser.Geom.Circle(0, 0, 80),
-                quantity: 8,
-                yoyo: false
-            },
-            angle: { min: 0, max: 360 },
-            speed: 100
-        });
-        mainEmitter.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2);
+    update(time: number) {
+        const centerX = this.cameras.main.width / 2;
+        const centerY = this.cameras.main.height / 2;
+        const numParticles = 40;
+        const baseRadius = 60 + Math.sin(time * 0.001) * 20;
+        const tints = [0x00c3ff, 0x0074ff, 0x00b28a];
 
-        
-        const secondaryEmitter = this.add.particles(this.cameras.main.width / 2, this.cameras.main.height / 2, 'particle', {
-            lifespan: 2000,
-            scale: { start: 0.1, end: 0 },
-            quantity: 1,
-            blendMode: Phaser.BlendModes.SCREEN,
-            tint: { onEmit: () => Phaser.Utils.Array.GetRandom([0x0074ff, 0x00c3ff, 0x00b28a]) },
-            alpha: { start: 3.5, end: 0 },
-            frequency: 2,
-            emitting: true,
-            emitZone: {
-                type: 'edge',
-                source: new Phaser.Geom.Circle(0, 0, 80),
-                quantity: 8,
-                yoyo: false
-            },
-            angle: { min: 0, max: 360 },
-            speed: 100
-        });
-        secondaryEmitter.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2);
+        for (let i = 0; i < numParticles; i++) {
+            const angle = (i / numParticles) * Math.PI * 2;
+            const wave = Math.sin(time * 0.002 + angle * 3 + Math.sin(time * 0.001 + i)) * 30;
+            const x = centerX + Math.cos(angle) * (baseRadius + wave);
+            const y = centerY + Math.sin(angle) * (baseRadius + wave);
 
-        // const smokeEmitter = this.add.particles(this.cameras.main.width / 2, this.cameras.main.height / 2, 'particle', {
-        //     lifespan: 2000,
-        //     scale: { start: 0.85, end: 0.3 },
-        //     quantity: 1,
-        //     blendMode: 'ADD',
-        //     tint: { onEmit: () => Phaser.Utils.Array.GetRandom([0x0074ff, 0x00c3ff, 0x00b28a, 0x90d65b, 0xe6f590]) },
-        //     alpha: { start: 0.3, end: 0 },
-        //     frequency: 90,
-        //     emitting: true,
-        //     emitZone: {
-        //         type: 'edge',
-        //         source: new Phaser.Geom.Circle(0, 0, 80),
-        //         quantity: 12,
-        //         yoyo: false
-        //     },
-        //     angle: { min: 0, max: 360 },
-        //     speed: 20
-        // });
-        // smokeEmitter.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2);
-
-        // this.particles = [mainEmitter, secondaryEmitter, smokeEmitter];
-        this.particles = [mainEmitter, secondaryEmitter];
+            this.particles.emitParticleAt(x, y, {
+                lifespan: 1800,
+                scale: { start: 1.2, end: 0 },
+                blendMode: Phaser.BlendModes.SCREEN,
+                alpha: { start: 1, end: 0 },
+                tint: tints[i % tints.length],
+            });
+        }
     }
 }
 
