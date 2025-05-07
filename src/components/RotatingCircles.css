@@ -1,13 +1,19 @@
 :root {
+  /* Realtime vars */
+  --scale: 1;
   --circle-scale: 2;
   --circle-mask-blur: 12px;
   --circle-blur: 2px;
+  --brightness: 1.5;
+
+  /* Animation vars */
   --rotation-speed-1: 5s;
   --rotation-speed-2: 6s;
   --rotation-speed-3: 8s;
   --rotation-speed-4: 10s;
   --rotation-speed-5: 6s;
   --distance-speed: 10s;
+
   
   /* Circle Colors */
   --circle-color-1: #0074ff;
@@ -21,7 +27,8 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(var(--scale));
   width: 300px;
   height: 300px;
   border-radius: 100%;
@@ -39,6 +46,8 @@
   mix-blend-mode: color-dodge;
   animation: spin linear infinite;
   filter: blur(var(--circle-blur)) brightness(1.5) contrast(1);
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .circle {
@@ -48,7 +57,7 @@
   border-radius: 100%;
   mix-blend-mode: color-dodge;
   opacity: 0.3;
-  filter: blur(var(--circle-blur)) brightness(1) contrast(3);
+  filter: blur(var(--circle-blur));
   animation: distance var(--distance-speed) ease-in-out infinite;
 }
 

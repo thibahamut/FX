@@ -6,19 +6,25 @@ interface RotatingCirclesProps {
   circleScale?: number;
   circleMaskBlur?: number;
   circleBlur?: number;
+  brightness?: number;
+  scale?: number;
 }
 
 const RotatingCircles = ({ 
   duration = 10,
   circleScale = 2,
   circleMaskBlur = 12,
-  circleBlur = 2
+  circleBlur = 2,
+  brightness = 1.5,
+  scale = 1,
 }: RotatingCirclesProps) => {
   useEffect(() => {
     document.documentElement.style.setProperty('--circle-scale', circleScale.toString());
     document.documentElement.style.setProperty('--circle-mask-blur', `${circleMaskBlur}px`);
     document.documentElement.style.setProperty('--circle-blur', `${circleBlur}px`);
-  }, [circleScale, circleMaskBlur, circleBlur]);
+    document.documentElement.style.setProperty('--brightness', brightness.toString());
+    document.documentElement.style.setProperty('--scale', scale.toString());
+  }, [circleScale, circleMaskBlur, circleBlur, brightness, scale]);
 
   return (
     <div className="circles-root">
