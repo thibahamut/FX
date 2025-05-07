@@ -4,7 +4,7 @@ import RotatingCircles from './components/RotatingCircles'
 function App() {
   return (
     <>
-      <RotatingCircles />
+      <RotatingCircles duration={16} circleScale={2} circleMaskBlur={12} circleBlur={16} />
     </>
   )
 }

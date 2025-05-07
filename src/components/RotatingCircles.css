@@ -1,15 +1,23 @@
 :root {
   --circle-scale: 2;
-  --circle-blur: 5px;
+  --circle-mask-blur: 12px;
+  --circle-blur: 2px;
   --rotation-speed-1: 5s;
   --rotation-speed-2: 6s;
   --rotation-speed-3: 8s;
   --rotation-speed-4: 10s;
   --rotation-speed-5: 6s;
   --distance-speed: 10s;
+  
+  /* Circle Colors */
+  --circle-color-1: #0074ff;
+  --circle-color-2: #00c3ff;
+  --circle-color-3: #00b28a;
+  --circle-color-4: #94ce68;
+  --circle-color-5: #a0be87;
 }
 
-.circles-container {
+.circles-root {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -18,26 +26,37 @@
   height: 300px;
   border-radius: 100%;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: transparent;
   box-shadow: 0 0 100px rgba(132, 220, 247, 0.5);
-  filter: blur(18px);
+  filter: blur(var(--circle-mask-blur));
+}
+
+.circles-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  mix-blend-mode: color-dodge;
+  animation: spin linear infinite;
+  filter: blur(var(--circle-blur)) brightness(1.5) contrast(1);
 }
 
 .circle {
   position: absolute;
   width: calc(100px * var(--circle-scale));
   height: calc(100px * var(--circle-scale));
-  border-radius: 50%;
-  filter: blur(var(--circle-blur));
-  mix-blend-mode: screen;
-  opacity: 0.8;
+  border-radius: 100%;
+  mix-blend-mode: color-dodge;
+  opacity: 0.3;
+  filter: blur(var(--circle-blur)) brightness(1) contrast(3);
   animation: distance var(--distance-speed) ease-in-out infinite;
 }
 
 .circle1 {
-  background-color: #0074ff;
+  background-color: var(--circle-color-1);
   top: 0;
   left: 50%;
+  opacity: 0.5;
   transform: translateX(-50%);
   animation: 
     distance var(--distance-speed) ease-in-out infinite,
@@ -45,7 +64,7 @@
 }
 
 .circle2 {
-  background-color: #00c3ff;
+  background-color: var(--circle-color-2);
   top: 50%;
   right: 0;
   transform: translateY(-50%);
@@ -55,7 +74,7 @@
 }
 
 .circle3 {
-  background-color: #00b28a;
+  background-color: var(--circle-color-3);
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -65,23 +84,23 @@
 }
 
 .circle4 {
-  background-color: #90d65b;
+  background-color: var(--circle-color-4);
   top: 50%;
   left: 0;
-  transform: translateY(-50%);
+  transform: translateY(-30%);
   animation: 
     distance var(--distance-speed) ease-in-out infinite -4.5s,
     rotate4 var(--rotation-speed-4) cubic-bezier(0.3, 0.7, 0.7, 0.3) infinite;
 }
 
 .circle5 {
-  background-color: #e6f590;
-  top: 25%;
-  left: 25%;
-  transform: translate(-50%, -50%);
+  background-color: var(--circle-color-5);
+  top: 50%;
+  left: 0;
+  transform: translateY(-30%);
   animation: 
-    distance var(--distance-speed) ease-in-out infinite -6s,
-    rotate5 var(--rotation-speed-5) cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+    distance var(--distance-speed) ease-in-out infinite -2s,
+    rotate5 var(--rotation-speed-5) cubic-bezier(0.3, 0.7, 0.7, 0.3) infinite;
 }
 
 @keyframes rotate1 {
@@ -116,11 +135,10 @@
 }
 
 @keyframes rotate5 {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  25% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); }
-  50% { transform: translate(-50%, -50%) rotate(360deg) scale(0.9); }
-  75% { transform: translate(-50%, -50%) rotate(540deg) scale(1.1); }
-  100% { transform: translate(-50%, -50%) rotate(720deg); }
+  0% { transform: translateY(-50%) rotate(0deg); }
+  30% { transform: translateY(-50%) rotate(150deg) scale(3.2); }
+  60% { transform: translateY(-50%) rotate(300deg) scale(0.4); }
+  100% { transform: translateY(-50%) rotate(450deg); }
 }
 
 @keyframes distance {
@@ -129,4 +147,9 @@
   50% { transform: translate(-50%, -50%) scale(0.8); }
   75% { transform: translate(-50%, -50%) scale(1.1); }
   100% { transform: translate(-50%, -50%) scale(1); }
-} 
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
