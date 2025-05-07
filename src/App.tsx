@@ -1,11 +1,10 @@
-import SiriEffect from './SiriEffect'
 import './App.css'
+import RotatingCircles from './components/RotatingCircles'
 
 function App() {
   return (
     <>
-      <h1>Hello!</h1>
-      <SiriEffect />
+      <RotatingCircles />
     </>
   )
 }
