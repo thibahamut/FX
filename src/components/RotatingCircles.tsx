@@ -8,6 +8,11 @@ interface RotatingCirclesProps {
   circleBlur?: number;
   brightness?: number;
   scale?: number;
+  circleColor1?: string;
+  circleColor2?: string;
+  circleColor3?: string;
+  circleColor4?: string;
+  circleColor5?: string;
 }
 
 const RotatingCircles = ({ 
@@ -17,6 +22,11 @@ const RotatingCircles = ({
   circleBlur = 2,
   brightness = 1.5,
   scale = 1,
+  circleColor1 = '#0074ff',
+  circleColor2 = '#00c3ff',
+  circleColor3 = '#00b28a',
+  circleColor4 = '#94ce68',
+  circleColor5 = '#a0be87',
 }: RotatingCirclesProps) => {
   useEffect(() => {
     document.documentElement.style.setProperty('--circle-scale', circleScale.toString());
@@ -24,7 +34,12 @@ const RotatingCircles = ({
     document.documentElement.style.setProperty('--circle-blur', `${circleBlur}px`);
     document.documentElement.style.setProperty('--brightness', brightness.toString());
     document.documentElement.style.setProperty('--scale', scale.toString());
-  }, [circleScale, circleMaskBlur, circleBlur, brightness, scale]);
+    document.documentElement.style.setProperty('--circle-color-1', circleColor1);
+    document.documentElement.style.setProperty('--circle-color-2', circleColor2);
+    document.documentElement.style.setProperty('--circle-color-3', circleColor3);
+    document.documentElement.style.setProperty('--circle-color-4', circleColor4);
+    document.documentElement.style.setProperty('--circle-color-5', circleColor5);
+  }, [circleScale, circleMaskBlur, circleBlur, brightness, scale, circleColor1, circleColor2, circleColor3, circleColor4, circleColor5]);
 
   return (
     <div className="circles-root">
