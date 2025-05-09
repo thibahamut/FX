@@ -45,7 +45,7 @@
   opacity: 1;
   mix-blend-mode: color-dodge;
   animation: spin linear infinite;
-  filter: blur(var(--circle-blur)) brightness(1.5) contrast(1);
+  filter: blur(var(--circle-blur)) brightness(var(--brightness)) contrast(1);
   transform-origin: center center;
   transform: translate(-50%, -50%) scale(1);
 }
