@@ -11,11 +11,14 @@ interface ControlPanelProps {
     circleMaskBlur: number;
     circleBlur: number;
     brightness: number;
+    contrast: number;
+    saturation: number;
     circleColor1: string;
     circleColor2: string;
     circleColor3: string;
     circleColor4: string;
     circleColor5: string;
+    circleColor6: string;
   };
   onParamChange: (param: keyof ControlPanelProps['params'], value: number | string) => void;
   onReset: () => void;
@@ -91,6 +94,24 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ params, onParamChange, onRe
       />
 
       <Slider
+        label="Contrast"
+        value={params.contrast}
+        min={0.1}
+        max={3}
+        step={0.1}
+        onChange={(value) => onParamChange('contrast', value)}
+      />
+
+      <Slider
+        label="Saturation"
+        value={params.saturation}
+        min={0.1}
+        max={3}
+        step={0.1}
+        onChange={(value) => onParamChange('saturation', value)}
+      />
+
+      <Slider
         label="Scale"
         value={params.scale}
         min={0.1}
@@ -127,6 +148,12 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ params, onParamChange, onRe
         label="Circle 5 Color"
         value={params.circleColor5}
         onChange={(value) => onParamChange('circleColor5', value)}
+      />
+
+      <ColorPicker
+        label="Circle 6 Color"
+        value={params.circleColor6}
+        onChange={(value) => onParamChange('circleColor6', value)}
       />
 
       <Button

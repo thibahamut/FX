@@ -5,6 +5,8 @@
   --circle-mask-blur: 12px;
   --circle-blur: 2px;
   --brightness: 1.5;
+  --contrast: 1;
+  --saturation: 1;
 
   /* Animation vars */
   --rotation-speed-1: 5s;
@@ -12,8 +14,8 @@
   --rotation-speed-3: 8s;
   --rotation-speed-4: 10s;
   --rotation-speed-5: 6s;
+  --rotation-speed-6: 7s;
   --distance-speed: 10s;
-
   
   /* Circle Colors */
   --circle-color-1: #0074ff;
@@ -21,6 +23,7 @@
   --circle-color-3: #00b28a;
   --circle-color-4: #94ce68;
   --circle-color-5: #a0be87;
+  --circle-color-6: #DB9F1FC4;
 }
 
 .circles-root {
@@ -34,7 +37,6 @@
   border-radius: 100%;
   overflow: hidden;
   background-color: transparent;
-  box-shadow: 0 0 100px rgba(132, 220, 247, 0.5);
   filter: blur(var(--circle-mask-blur));
 }
 
@@ -45,7 +47,7 @@
   opacity: 1;
   mix-blend-mode: color-dodge;
   animation: spin linear infinite;
-  filter: blur(var(--circle-blur)) brightness(var(--brightness)) contrast(1);
+  filter: blur(var(--circle-blur)) brightness(var(--brightness)) contrast(var(--contrast)) saturate(var(--saturation));
   transform-origin: center center;
   transform: translate(-50%, -50%) scale(1);
 }
@@ -56,7 +58,6 @@
   height: calc(100px * var(--circle-scale));
   border-radius: 100%;
   mix-blend-mode: color-dodge;
-  opacity: 0.3;
   filter: blur(var(--circle-blur));
   animation: distance var(--distance-speed) ease-in-out infinite;
 }
@@ -65,7 +66,6 @@
   background-color: var(--circle-color-1);
   top: 0;
   left: 50%;
-  opacity: 0.5;
   transform: translateX(-50%);
   animation: 
     distance var(--distance-speed) ease-in-out infinite,
@@ -112,6 +112,16 @@
     rotate5 var(--rotation-speed-5) cubic-bezier(0.3, 0.7, 0.7, 0.3) infinite;
 }
 
+.circle6 {
+  background-color: var(--circle-color-6);
+  top: 5%;
+  left: 85%;
+  transform: translate(-20%, -80%);
+  animation: 
+    distance var(--distance-speed) ease-in-out infinite -3.5s,
+    rotate6 var(--rotation-speed-6) cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
 @keyframes rotate1 {
   0% { transform: translateX(-50%) rotate(0deg); }
   25% { transform: translateX(-50%) rotate(120deg) scale(1.1); }
@@ -148,6 +158,17 @@
   30% { transform: translateY(-50%) rotate(150deg) scale(3.2); }
   60% { transform: translateY(-50%) rotate(300deg) scale(0.4); }
   100% { transform: translateY(-50%) rotate(450deg); }
+}
+
+@keyframes rotate6 {
+  0% { transform: translate(-20%, -80%) rotate(0deg) scale(1); }
+  15% { transform: translate(-40%, -60%) rotate(60deg) scale(1.5); }
+  30% { transform: translate(-20%, -30%) rotate(180deg) scale(0.8); }
+  45% { transform: translate(10%, -40%) rotate(240deg) scale(1.2); }
+  60% { transform: translate(20%, -60%) rotate(300deg) scale(0.9); }
+  75% { transform: translate(0%, -70%) rotate(420deg) scale(1.4); }
+  90% { transform: translate(-15%, -75%) rotate(520deg) scale(0.7); }
+  100% { transform: translate(-20%, -80%) rotate(600deg) scale(1); }
 }
 
 @keyframes distance {
