@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import ControlPanel from './components/ControlPanel'
 import RotatingCircles from './components/RotatingCircles'
+import EntranceAnimation from './components/EntranceAnimation'
 
 type CircleState = {
   duration: number;
+  entranceDuration: number;
   circleScale: number;
   circleMaskBlur: number;
   circleBlur: number;
@@ -21,6 +23,7 @@ type CircleState = {
 
 const DEFAULT_STATE: CircleState = {
   duration: 30,
+  entranceDuration: 3,
   circleScale: 1.6,
   circleMaskBlur: 2.3,
   circleBlur: 14.7,
@@ -38,6 +41,9 @@ const DEFAULT_STATE: CircleState = {
 
 function App() {
   const [params, setParams] = useState(DEFAULT_STATE);
+  const [showEntrance, setShowEntrance] = useState(false);
+  const [showCircles, setShowCircles] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleParamChange = (param: keyof CircleState, value: number | string) => {
     setParams(prev => ({
@@ -48,6 +54,24 @@ function App() {
 
   const handleReset = () => {
     setParams(DEFAULT_STATE);
+    setShowEntrance(false);
+    setShowCircles(false);
+    setIsTransitioning(false);
+  };
+
+  const handleEntranceComplete = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setShowEntrance(false);
+      setShowCircles(true);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const startAnimation = () => {
+    setShowEntrance(true);
+    setShowCircles(false);
+    setIsTransitioning(false);
   };
 
   return (
@@ -58,24 +82,78 @@ function App() {
         onReset={handleReset}
       />
 
-      <RotatingCircles 
-        shadowBlurClass="shadow-blur"
-        duration={params.duration}
-        circleScale={params.circleScale}
-        circleMaskBlur={params.circleMaskBlur}
-        circleBlur={params.circleBlur}
-        brightness={params.brightness}
-        contrast={params.contrast}
-        saturation={params.saturation}
-        scale={params.scale}
-        circleColor1={params.circleColor1}
-        circleColor2={params.circleColor2}
-        circleColor3={params.circleColor3}
-        circleColor4={params.circleColor4}
-        circleColor5={params.circleColor5}
-        circleColor6={params.circleColor6}
-      />
-      
+      <button 
+        onClick={startAnimation}
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          padding: '10px 20px',
+          fontSize: '16px',
+          backgroundColor: '#4f24ee',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          zIndex: 1001,
+          transition: 'background-color 0.3s ease',
+        }}
+        onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#3a1bb0'}
+        onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#4f24ee'}
+      >
+        Play Intro
+      </button>
+
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        transition: 'opacity 0.5s ease, transform 0.5s ease',
+        opacity: isTransitioning ? 0 : 1,
+        transform: isTransitioning ? 'scale(0.75)' : 'scale(1)'
+      }}>
+        {showEntrance && (
+          <EntranceAnimation
+            onAnimationComplete={handleEntranceComplete}
+            duration={2}
+            circleScale={params.circleScale}
+            circleMaskBlur={params.circleMaskBlur}
+            circleBlur={params.circleBlur}
+            brightness={params.brightness}
+            contrast={params.contrast}
+            saturation={params.saturation}
+            scale={5}
+            circleColor1={params.circleColor1}
+            circleColor2={params.circleColor2}
+            circleColor3={params.circleColor3}
+            circleColor4={params.circleColor4}
+            circleColor5={params.circleColor5}
+            circleColor6={params.circleColor6}
+          />
+        )}
+
+        {showCircles && (
+          <RotatingCircles 
+            shadowBlurClass="shadow-blur"
+            duration={params.duration}
+            circleScale={params.circleScale}
+            circleMaskBlur={params.circleMaskBlur}
+            circleBlur={params.circleBlur}
+            brightness={params.brightness}
+            contrast={params.contrast}
+            saturation={params.saturation}
+            scale={params.scale}
+            circleColor1={params.circleColor1}
+            circleColor2={params.circleColor2}
+            circleColor3={params.circleColor3}
+            circleColor4={params.circleColor4}
+            circleColor5={params.circleColor5}
+            circleColor6={params.circleColor6}
+          />
+        )}
+      </div>
     </>
   )
 }
