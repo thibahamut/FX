@@ -53,12 +53,18 @@ function App() {
 
   return (
     <>
-      <ControlPanel 
+      <ControlPanel
         params={params}
         onParamChange={handleParamChange}
         onReset={handleReset}
       />
-      <RotatingCircles 
+
+      <RotatingCircles
+        sx={{
+          position: 'fixed',
+          left: 'calc(50% - 70px)',
+          transform: 'translate(-50%, -50%)',
+        }}
         duration={params.duration}
         circleScale={params.circleScale}
         circleMaskBlur={params.circleMaskBlur}
@@ -74,6 +80,73 @@ function App() {
         circleColor5={params.circleColor5}
         circleColor6={params.circleColor6}
       />
+
+      <RotatingCircles
+        sx={{
+          position: 'fixed',
+          left: 'calc(50% + 70px)',
+          transform: 'translate(-50%, -50%)',
+        }}
+        duration={params.duration}
+        circleScale={params.circleScale}
+        circleMaskBlur={params.circleMaskBlur}
+        circleBlur={params.circleBlur}
+        brightness={params.brightness}
+        contrast={params.contrast}
+        saturation={params.saturation}
+        scale={params.scale}
+        circleColor1={params.circleColor1}
+        circleColor2={params.circleColor2}
+        circleColor3={params.circleColor3}
+        circleColor4={params.circleColor4}
+        circleColor5={params.circleColor5}
+        circleColor6={params.circleColor6}
+      />
+
+      <RotatingCircles
+        sx={{
+          position: 'fixed',
+          top: 'calc(50% + 70px)',
+          transform: 'translate(-50%, -50%) rotate(90deg)',
+        }}
+        duration={params.duration}
+        circleScale={params.circleScale}
+        circleMaskBlur={params.circleMaskBlur}
+        circleBlur={params.circleBlur}
+        brightness={params.brightness}
+        contrast={params.contrast}
+        saturation={params.saturation}
+        scale={params.scale}
+        circleColor1={params.circleColor1}
+        circleColor2={params.circleColor2}
+        circleColor3={params.circleColor3}
+        circleColor4={params.circleColor4}
+        circleColor5={params.circleColor5}
+        circleColor6={params.circleColor6}
+      />
+
+      <RotatingCircles
+        sx={{
+          position: 'fixed',
+          top: 'calc(50% - 70px)',
+          transform: 'translate(-50%, -50%) rotate(90deg)',
+        }}
+        duration={params.duration}
+        circleScale={params.circleScale}
+        circleMaskBlur={params.circleMaskBlur}
+        circleBlur={params.circleBlur}
+        brightness={params.brightness}
+        contrast={params.contrast}
+        saturation={params.saturation}
+        scale={params.scale}
+        circleColor1={params.circleColor1}
+        circleColor2={params.circleColor2}
+        circleColor3={params.circleColor3}
+        circleColor4={params.circleColor4}
+        circleColor5={params.circleColor5}
+        circleColor6={params.circleColor6}
+      />
+
     </>
   )
 }
