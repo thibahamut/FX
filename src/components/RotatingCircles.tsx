@@ -1,5 +1,5 @@
-import './RotatingCircles.css';
 import { useEffect } from 'react';
+import './RotatingCircles.css';
 
 interface RotatingCirclesProps {
   duration?: number;
@@ -16,23 +16,25 @@ interface RotatingCirclesProps {
   circleColor4?: string;
   circleColor5?: string;
   circleColor6?: string;
+  shadowBlurClass?: string;
 }
 
-const RotatingCircles = ({ 
-  duration = 10,
-  circleScale = 2,
-  circleMaskBlur = 12,
-  circleBlur = 2,
-  brightness = 1.5,
+const RotatingCircles = ({
+  duration = 30,
+  circleScale = 1.6,
+  circleMaskBlur = 2.3,
+  circleBlur = 14.7,
+  brightness = 1,
   contrast = 1,
   saturation = 1,
   scale = 1,
-  circleColor1 = '#0074ff',
-  circleColor2 = '#00c3ff',
-  circleColor3 = '#00b28a',
-  circleColor4 = '#94ce68',
-  circleColor5 = '#a0be87',
-  circleColor6 = '#DB9F1FC4',
+  circleColor1 = '#ffcb16ff',
+  circleColor2 = '#ff245bff',
+  circleColor3 = '#7d26c9ff',
+  circleColor4 = '#00dc7cff',
+  circleColor5 = '#4f24eeff',
+  circleColor6 = '#ff2de46e',
+  shadowBlurClass = '',
 }: RotatingCirclesProps) => {
   useEffect(() => {
     document.documentElement.style.setProperty('--circle-scale', circleScale.toString());
@@ -51,25 +53,49 @@ const RotatingCircles = ({
   }, [circleScale, circleMaskBlur, circleBlur, brightness, contrast, saturation, scale, circleColor1, circleColor2, circleColor3, circleColor4, circleColor5, circleColor6]);
 
   return (
-    <div className="circles-root">
-      <div className="circles-container" style={{ animationDuration: `${duration}s`, animationDirection: 'normal' }}>
-        <div className="circle circle1"></div>
-        <div className="circle circle2"></div>
-        <div className="circle circle3"></div>
-        <div className="circle circle4"></div>
-        <div className="circle circle5"></div>
-        <div className="circle circle6"></div>
+    <>
+      {/* SHADOW */}
+      <div className={`circles-root ${shadowBlurClass || ''}`}>
+        <div className="circles-container" style={{ animationDuration: `${duration}s`, animationDirection: 'normal' }}>
+          <div className="circle circle1"></div>
+          <div className="circle circle2"></div>
+          <div className="circle circle3"></div>
+          <div className="circle circle4"></div>
+          <div className="circle circle5"></div>
+          <div className="circle circle6"></div>
+        </div>
+
+        <div className="circles-container" style={{ animationDuration: `${duration * 0.4}s`, animationDirection: 'reverse' }}>
+          <div className="circle circle1"></div>
+          <div className="circle circle2"></div>
+          <div className="circle circle3"></div>
+          <div className="circle circle4"></div>
+          <div className="circle circle5"></div>
+          <div className="circle circle6"></div>
+        </div>
       </div>
 
-      <div className="circles-container" style={{ animationDuration: `${duration * 0.4}s`, animationDirection: 'reverse' }}>
-        <div className="circle circle1"></div>
-        <div className="circle circle2"></div>
-        <div className="circle circle3"></div>
-        <div className="circle circle4"></div>
-        <div className="circle circle5"></div>
-        <div className="circle circle6"></div>
+      {/* MAIN */}
+      <div className={`circles-root`}>
+        <div className="circles-container" style={{ animationDuration: `${duration}s`, animationDirection: 'normal' }}>
+          <div className="circle circle1"></div>
+          <div className="circle circle2"></div>
+          <div className="circle circle3"></div>
+          <div className="circle circle4"></div>
+          <div className="circle circle5"></div>
+          <div className="circle circle6"></div>
+        </div>
+
+        <div className="circles-container" style={{ animationDuration: `${duration * 0.4}s`, animationDirection: 'reverse' }}>
+          <div className="circle circle1"></div>
+          <div className="circle circle2"></div>
+          <div className="circle circle3"></div>
+          <div className="circle circle4"></div>
+          <div className="circle circle5"></div>
+          <div className="circle circle6"></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
-import './App.css'
-import RotatingCircles from './components/RotatingCircles'
-import ControlPanel from './components/ControlPanel'
 import { useState } from 'react'
+import ControlPanel from './components/ControlPanel'
+import RotatingCircles from './components/RotatingCircles'
 
 type CircleState = {
   duration: number;
@@ -22,19 +21,19 @@ type CircleState = {
 
 const DEFAULT_STATE: CircleState = {
   duration: 30,
-  circleScale: 2,
-  circleMaskBlur: 0,
-  circleBlur: 12,
-  brightness: 1.5,
+  circleScale: 1.6,
+  circleMaskBlur: 2.3,
+  circleBlur: 14.7,
+  brightness: 1,
   contrast: 1,
   saturation: 1,
-  scale: 0.8,
-  circleColor1: 'rgba(0, 116, 255, 0.5)',
-  circleColor2: 'rgba(0, 195, 255, 0.3)',
-  circleColor3: 'rgba(0, 178, 138, 0.3)',
-  circleColor4: 'rgba(148, 206, 104, 0.3)',
-  circleColor5: 'rgba(160, 190, 135, 0.3)',
-  circleColor6: '#DB9F1FC4',
+  scale: 1,
+  circleColor1: '#ffcb16ff',
+  circleColor2: '#ff245bff',
+  circleColor3: '#7d26c9ff',
+  circleColor4: '#00dc7cff',
+  circleColor5: '#4f24eeff',
+  circleColor6: '#ff2de46e',
 };
 
 function App() {
@@ -58,7 +57,9 @@ function App() {
         onParamChange={handleParamChange}
         onReset={handleReset}
       />
+
       <RotatingCircles 
+        shadowBlurClass="shadow-blur"
         duration={params.duration}
         circleScale={params.circleScale}
         circleMaskBlur={params.circleMaskBlur}
@@ -74,6 +75,7 @@ function App() {
         circleColor5={params.circleColor5}
         circleColor6={params.circleColor6}
       />
+      
     </>
   )
 }

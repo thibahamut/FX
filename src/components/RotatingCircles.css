@@ -26,6 +26,10 @@
   --circle-color-6: #DB9F1FC4;
 }
 
+.shadow-blur {
+  filter: blur(40px) !important;
+}
+
 .circles-root {
   position: fixed;
   top: 50%;
@@ -38,6 +42,7 @@
   overflow: hidden;
   background-color: transparent;
   filter: blur(var(--circle-mask-blur));
+  isolation: isolate;
 }
 
 .circles-container {
