@@ -76,19 +76,20 @@ function App() {
 
   return (
     <>
-      <ControlPanel 
+      {/* <ControlPanel 
         params={params}
         onParamChange={handleParamChange}
         onReset={handleReset}
-      />
+      /> */}
 
       <button 
         onClick={startAnimation}
         style={{
           position: 'fixed',
-          top: '20px',
-          right: '20px',
+          top: '80px',
+          right: '50%',
           padding: '10px 20px',
+          transform: 'translateX(50%)',
           fontSize: '16px',
           backgroundColor: '#4f24ee',
           color: 'white',
