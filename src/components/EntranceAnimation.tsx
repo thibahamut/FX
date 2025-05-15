@@ -1,49 +1,27 @@
 import { useEffect, useState } from 'react';
-import './EntranceAnimation.css';
 
 interface EntranceAnimationProps {
   onAnimationComplete: () => void;
-  duration: number;
-  circleScale: number;
-  circleMaskBlur: number;
-  circleBlur: number;
-  brightness: number;
-  contrast: number;
-  saturation: number;
-  scale: number;
   circleColor1: string;
   circleColor2: string;
   circleColor3: string;
   circleColor4: string;
   circleColor5: string;
   circleColor6: string;
-  circleStretchX: number;
-  circleStretchY: number;
 }
 
-// Função utilitária para gerar número aleatório entre min e max
 function randomBetween(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
 
 const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
   onAnimationComplete,
-  duration,
-  circleScale,
-  circleMaskBlur,
-  circleBlur,
-  brightness,
-  contrast,
-  saturation,
-  scale,
   circleColor1,
   circleColor2,
   circleColor3,
   circleColor4,
   circleColor5,
   circleColor6,
-  circleStretchX,
-  circleStretchY,
 }) => {
   const [phase, setPhase] = useState<'center' | 'exploded' | 'returning' | 'grow' | 'out'>('center');
 
@@ -51,9 +29,9 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
 
     let explodeTimeoutMs = 100;
     let returnTimeoutMs = 800;
-    let growTimeoutMs = 500;
-    let outTimeoutMs = 700;
-    let doneTimeoutMs = 200;
+    let growTimeoutMs = 800;
+    let outTimeoutMs = 1000;
+    let doneTimeoutMs = 400;
 
     let timer = 0;
     timer += explodeTimeoutMs;
@@ -74,10 +52,10 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
       clearTimeout(outTimeout);
       clearTimeout(doneTimeout);
     };
-  }, [duration, onAnimationComplete]);
+  }, [onAnimationComplete]);
 
   const circles = [circleColor1, circleColor2, circleColor3, circleColor4, circleColor5, circleColor6];
-  const circleSize = 40 * circleScale;
+  const circleSize = 40;
 
   return (
     <div className="entrance-animation" style={{ 
@@ -86,64 +64,71 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
       top: '50%',
       width: 300, 
       height: 300,
+      transformOrigin: 'center center',
+      borderRadius: '100%',
+      backgroundColor: 'transparent',
+      isolation: 'isolate',
+      mixBlendMode: 'color-dodge',
       transform: `translate(-50%, -50%) ${phase === 'center' ? 'rotate(0deg)' : 
                 phase === 'exploded' ? 'rotate(90deg)' : 
                 phase === 'returning' ? 'rotate(180deg)' : 
                 phase === 'grow' ? 'rotate(90deg)' : 
                 phase === 'out' ? 'rotate(180deg)' : 
-                'rotate(270deg)'}`,      
-      transformOrigin: 'center',
+                'rotate(270deg)'}`,
       transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
-    }}>      
+    }}>
       {circles.map((color, index) => {
         const angle = (index * 60) * (Math.PI / 180);
         let distance = 0;
         let blur = 0;
-        let transition = 'none';
         let transitionDelay = '0s';
         let scaleValue = 1;
         let opacity = 0.9;
+        let transitionTime = 0.25;
+        let circleStretchX = 1;
+        let circleStretchY = 1;
 
         if (phase === 'center') {
+          transitionTime = 0.6;
+          opacity = 0;
           distance = 400;
           blur = 20;
           scaleValue = 30;
           circleStretchX = scaleValue * 0.1;
           circleStretchY = scaleValue * 0.5;
-          transition = `transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 1s, opacity 0.3s ease`;
-          opacity = 0;
+          transitionDelay = `${index * 0.25}s`;
         } else if (phase === 'exploded') {
+          transitionTime = 0.6;
           distance = 30;
-          blur = 0;
+          blur = 10;
           scaleValue = 2;
           circleStretchX = scaleValue * 0.3;
           circleStretchY = scaleValue * 1;
           transitionDelay = `${index * 0.1}s`;
-          transition = `transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 1s, opacity 0.3s ease`;
         } else if (phase === 'returning') {
+          transitionTime = 0.3;
           distance = 60;
           blur = 0;
           scaleValue = 2;
           circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
-          transitionDelay = `${index * 0.07}s`;
-          transition = `transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, filter 1s`;
+          transitionDelay = `${index * 0.08}s`;
         } else if (phase === 'grow') {
-          distance = 120;
+          transitionTime = 0.5;
+          distance = -140;
           blur = 0;
           scaleValue = 2;
-          circleStretchX = scaleValue * 0.8;
+          circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
-          transitionDelay = `${index * 0.08}s`;
-          transition = `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, filter 1s`;
+          transitionDelay = `${index * 0.15}s`;
         } else if (phase === 'out') {
-          distance = 300;
+          transitionTime = 0.8;
+          distance = 360;
           blur = 10;
-          scaleValue = 0.5;
-          circleStretchX = 0.5;
-          circleStretchY = 0.5;
+          scaleValue = 0.8;
+          circleStretchX = scaleValue * 1;
+          circleStretchY = scaleValue * 1;
           transitionDelay = `${index * 0.05}s`;
-          transition = `transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease, filter 0.5s`;
           opacity = 0;
         }
         const x = Math.cos(angle) * distance;
@@ -162,7 +147,7 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
               background: color,
               filter: `blur(${blur}px)`,
               transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${angleDeg + 90}deg) scaleX(${circleStretchX}) scaleY(${circleStretchY})`,
-              transition,
+              transition: `transform ${transitionTime}s cubic-bezier(0.34, 1.56, 0.64, 1), filter 1s, opacity 0.3s ease`,
               transitionDelay,
               boxShadow: `0 0 10px 10px ${color}`,
               mixBlendMode: 'color-dodge',

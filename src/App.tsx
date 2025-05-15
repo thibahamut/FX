@@ -45,19 +45,19 @@ function App() {
   const [showCircles, setShowCircles] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleParamChange = (param: keyof CircleState, value: number | string) => {
-    setParams(prev => ({
-      ...prev,
-      [param]: value
-    }));
-  };
+  // const handleParamChange = (param: keyof CircleState, value: number | string) => {
+  //   setParams(prev => ({
+  //     ...prev,
+  //     [param]: value
+  //   }));
+  // };
 
-  const handleReset = () => {
-    setParams(DEFAULT_STATE);
-    setShowEntrance(false);
-    setShowCircles(false);
-    setIsTransitioning(false);
-  };
+  // const handleReset = () => {
+  //   setParams(DEFAULT_STATE);
+  //   setShowEntrance(false);
+  //   setShowCircles(false);
+  //   setIsTransitioning(false);
+  // };
 
   const handleEntranceComplete = () => {
     setIsTransitioning(true);
@@ -86,11 +86,11 @@ function App() {
         onClick={startAnimation}
         style={{
           position: 'fixed',
-          top: '80px',
+          top: '30px',
           right: '50%',
           padding: '10px 20px',
           transform: 'translateX(50%)',
-          fontSize: '16px',
+          fontSize: '14px',
           backgroundColor: '#4f24ee',
           color: 'white',
           border: 'none',
@@ -99,8 +99,6 @@ function App() {
           zIndex: 1001,
           transition: 'background-color 0.3s ease',
         }}
-        onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#3a1bb0'}
-        onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#4f24ee'}
       >
         Play Intro
       </button>
@@ -118,14 +116,6 @@ function App() {
         {showEntrance && (
           <EntranceAnimation
             onAnimationComplete={handleEntranceComplete}
-            duration={2}
-            circleScale={params.circleScale}
-            circleMaskBlur={params.circleMaskBlur}
-            circleBlur={params.circleBlur}
-            brightness={params.brightness}
-            contrast={params.contrast}
-            saturation={params.saturation}
-            scale={5}
             circleColor1={params.circleColor1}
             circleColor2={params.circleColor2}
             circleColor3={params.circleColor3}
