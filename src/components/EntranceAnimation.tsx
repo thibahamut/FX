@@ -74,7 +74,7 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
         if (phase === 'begin') {
           transitionTime = 0.5;
           opacity = 0;
-          distance = 0;
+          distance = 50;
           blur = 20;
           scaleValue = 0;
           circleStretchX = scaleValue * 1;
@@ -82,9 +82,9 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
           transitionDelay = `${index * 0.08}s`;
         } else if (phase === 'out') {
           transitionTime = 0.25;
-          distance = 50;
-          blur = 10;
-          scaleValue = 4;
+          distance = 80;
+          blur = 6;
+          scaleValue = 2;
           circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
           transitionDelay = `${index * 0.05}s`;
