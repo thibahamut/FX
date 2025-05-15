@@ -23,32 +23,24 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
   circleColor5,
   circleColor6,
 }) => {
-  const [phase, setPhase] = useState<'center' | 'exploded' | 'returning' | 'grow' | 'out'>('center');
+  const [phase, setPhase] = useState<'begin' | 'open' | 'out'>('begin');
 
   useEffect(() => {
-
-    let explodeTimeoutMs = 100;
-    let returnTimeoutMs = 800;
-    let growTimeoutMs = 800;
-    let outTimeoutMs = 1000;
-    let doneTimeoutMs = 400;
+    let beginTimeoutMs = 10;
+    let openTimeoutMs = 500;
+    let outTimeoutMs = 400;
+    let doneTimeoutMs = 200;
 
     let timer = 0;
-    timer += explodeTimeoutMs;
-    const explodeTimeout = setTimeout(() => setPhase('exploded'), timer);
-    timer += returnTimeoutMs;
-    const returnTimeout = setTimeout(() => setPhase('returning'), timer);
-    timer += growTimeoutMs;
-    const growTimeout = setTimeout(() => setPhase('grow'), timer);
-    timer += outTimeoutMs;
+    timer += beginTimeoutMs;
+    const beginTimeout = setTimeout(() => setPhase('open'), timer);
+    timer += openTimeoutMs;
     const outTimeout = setTimeout(() => setPhase('out'), timer);
-    timer += doneTimeoutMs;
+    timer += outTimeoutMs;
     const doneTimeout = setTimeout(() => onAnimationComplete(), timer);
 
     return () => {
-      clearTimeout(explodeTimeout);
-      clearTimeout(returnTimeout);
-      clearTimeout(growTimeout);
+      clearTimeout(beginTimeout);
       clearTimeout(outTimeout);
       clearTimeout(doneTimeout);
     };
@@ -69,13 +61,10 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
       backgroundColor: 'transparent',
       isolation: 'isolate',
       mixBlendMode: 'color-dodge',
-      transform: `translate(-50%, -50%) ${phase === 'center' ? 'rotate(0deg)' : 
-                phase === 'exploded' ? 'rotate(90deg)' : 
-                phase === 'returning' ? 'rotate(180deg)' : 
-                phase === 'grow' ? 'rotate(90deg)' : 
-                phase === 'out' ? 'rotate(180deg)' : 
+      transform: `translate(-50%, -50%) ${phase === 'begin' ? 'rotate(0deg)' : 
+                phase === 'open' ? 'rotate(180deg)' : 
                 'rotate(270deg)'}`,
-      transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
+      transition: 'transform 0.2s'
     }}>
       {circles.map((color, index) => {
         const angle = (index * 60) * (Math.PI / 180);
@@ -88,48 +77,32 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
         let circleStretchX = 1;
         let circleStretchY = 1;
 
-        if (phase === 'center') {
-          transitionTime = 0.6;
+        if (phase === 'begin') {
+          transitionTime = 0.5;
           opacity = 0;
-          distance = 400;
+          distance = 0;
           blur = 20;
-          scaleValue = 30;
-          circleStretchX = scaleValue * 0.1;
-          circleStretchY = scaleValue * 0.5;
-          transitionDelay = `${index * 0.25}s`;
-        } else if (phase === 'exploded') {
-          transitionTime = 0.6;
-          distance = 30;
-          blur = 10;
-          scaleValue = 2;
-          circleStretchX = scaleValue * 0.3;
+          scaleValue = 0;
+          circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
-          transitionDelay = `${index * 0.1}s`;
-        } else if (phase === 'returning') {
-          transitionTime = 0.3;
-          distance = 60;
-          blur = 0;
+          transitionDelay = `${index * 0.08}s`;
+        } else if (phase === 'open') {
+          transitionTime = 0.5;
+          distance = 100;
+          blur = 5;
           scaleValue = 2;
           circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
           transitionDelay = `${index * 0.08}s`;
-        } else if (phase === 'grow') {
-          transitionTime = 0.5;
-          distance = -140;
-          blur = 0;
-          scaleValue = 2;
-          circleStretchX = scaleValue * 1;
-          circleStretchY = scaleValue * 1;
-          transitionDelay = `${index * 0.15}s`;
         } else if (phase === 'out') {
-          transitionTime = 0.8;
-          distance = 360;
+          transitionTime = 0.25;
+          distance = 50;
           blur = 10;
-          scaleValue = 0.8;
+          scaleValue = 4;
           circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
           transitionDelay = `${index * 0.05}s`;
-          opacity = 0;
+          opacity = 1;
         }
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
