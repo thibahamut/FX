@@ -23,24 +23,20 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
   circleColor5,
   circleColor6,
 }) => {
-  const [phase, setPhase] = useState<'begin' | 'open' | 'out'>('begin');
+  const [phase, setPhase] = useState<'begin' | 'out'>('begin');
 
   useEffect(() => {
     let beginTimeoutMs = 10;
-    let openTimeoutMs = 500;
-    let outTimeoutMs = 400;
+    let outTimeoutMs = 500;
     let doneTimeoutMs = 200;
 
     let timer = 0;
     timer += beginTimeoutMs;
-    const beginTimeout = setTimeout(() => setPhase('open'), timer);
-    timer += openTimeoutMs;
     const outTimeout = setTimeout(() => setPhase('out'), timer);
     timer += outTimeoutMs;
     const doneTimeout = setTimeout(() => onAnimationComplete(), timer);
 
     return () => {
-      clearTimeout(beginTimeout);
       clearTimeout(outTimeout);
       clearTimeout(doneTimeout);
     };
@@ -61,9 +57,7 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
       backgroundColor: 'transparent',
       isolation: 'isolate',
       mixBlendMode: 'color-dodge',
-      transform: `translate(-50%, -50%) ${phase === 'begin' ? 'rotate(0deg)' : 
-                phase === 'open' ? 'rotate(180deg)' : 
-                'rotate(270deg)'}`,
+      transform: `translate(-50%, -50%) ${phase === 'begin' ? 'rotate(0deg)' : 'rotate(270deg)'}`,
       transition: 'transform 0.2s'
     }}>
       {circles.map((color, index) => {
@@ -83,14 +77,6 @@ const EntranceAnimation: React.FC<EntranceAnimationProps> = ({
           distance = 0;
           blur = 20;
           scaleValue = 0;
-          circleStretchX = scaleValue * 1;
-          circleStretchY = scaleValue * 1;
-          transitionDelay = `${index * 0.08}s`;
-        } else if (phase === 'open') {
-          transitionTime = 0.5;
-          distance = 100;
-          blur = 5;
-          scaleValue = 2;
           circleStretchX = scaleValue * 1;
           circleStretchY = scaleValue * 1;
           transitionDelay = `${index * 0.08}s`;
